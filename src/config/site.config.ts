@@ -57,21 +57,21 @@ export const siteConfig = {
       name: "Iván Martínez Galán",
       shortName: "Iván",
       role: "Barbero",
-      image: "/assets/team/TEAM1.png"
+      image: "/galanbarbers/assets/team/TEAM1.png"
     },
     { 
       id: "juan",
       name: "Juan Martínez Galán",
       shortName: "Juan",
       role: "Barbero",
-      image: "/assets/team/TEAM2.png"
+      image: "/galanbarbers/assets/team/TEAM2.png"
     },
     { 
       id: "natanael",
       name: "Natanael",
       shortName: "Natanael",
       role: "Barbero",
-      image: "/assets/team/TEAM3.png"
+      image: "/galanbarbers/assets/team/TEAM3.png"
     },
   ],
 
@@ -164,24 +164,24 @@ export const siteConfig = {
   // Imágenes (agrupadas por prefijo)
   images: {
     logo: {
-      main: "/assets/LOGOPRINCIPAL.png",
-      footer: "/assets/LOGOPEQUENOFOOTER.jpeg"
+      main: "/galanbarbers/assets/LOGOPRINCIPAL.png",
+      footer: "/galanbarbers/assets/LOGOPEQUENOFOOTER.jpeg"
     },
     local: [
-      "/assets/local/LOC1.jpeg",
-      "/assets/local/LOC2.jpeg"
+      "/galanbarbers/assets/local/LOC1.jpeg",
+      "/galanbarbers/assets/local/LOC2.jpeg"
     ],
     team: [
-      "/assets/team/TEAM1.png",
-      "/assets/team/TEAM2.png",
-      "/assets/team/TEAM3.png",
-      "/assets/team/TEAM4.png"
+      "/galanbarbers/assets/team/TEAM1.png",
+      "/galanbarbers/assets/team/TEAM2.png",
+      "/galanbarbers/assets/team/TEAM3.png",
+      "/galanbarbers/assets/team/TEAM4.png"
     ],
     works: [
-      "/assets/works/TRA1.jpeg",
-      "/assets/works/TRA2.jpeg",
-      "/assets/works/TRA3.jpeg",
-      "/assets/works/TRA4.jpeg"
+      "/galanbarbers/assets/works/TRA1.jpeg",
+      "/galanbarbers/assets/works/TRA2.jpeg",
+      "/galanbarbers/assets/works/TRA3.jpeg",
+      "/galanbarbers/assets/works/TRA4.jpeg"
     ]
   }
 } as const;
