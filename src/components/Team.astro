@@ -1,0 +1,55 @@
+---
+import { siteConfig } from '../config/site.config';
+---
+
+<section id="equipo" class="py-20 md:py-32 bg-brand-dark relative overflow-hidden">
+  <!-- Gradient decorativo -->
+  <div class="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-brand-black to-transparent"></div>
+  <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-brand-black to-transparent"></div>
+  
+  <div class="container-custom relative z-10">
+    <!-- Header de sección -->
+    <div class="text-center mb-12 md:mb-16 reveal">
+      <span class="inline-block text-brand-accent uppercase tracking-widest text-sm mb-4 translatable" data-es="Conoce a" data-ca="Coneix a">
+        Conoce a
+      </span>
+      <h2 class="heading-display text-3xl sm:text-4xl md:text-5xl text-brand-white mb-4 translatable" data-es="Nuestro Equipo" data-ca="El Nostre Equip">
+        Nuestro Equipo
+      </h2>
+      <div class="accent-line mx-auto"></div>
+    </div>
+    
+    <!-- Grid de equipo -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto">
+      {siteConfig.team.map((member, index) => (
+        <article 
+          class="team-card group relative reveal"
+          style={`--delay: ${index * 0.1}s`}
+        >
+          <!-- Imagen -->
+          <div class="relative aspect-[3/4] overflow-hidden rounded-sm">
+            <img 
+              src={member.image}
+              alt={member.name}
+              class="w-full h-full object-cover object-top transition-transform duration-700 
+                     group-hover:scale-105"
+              loading="lazy"
+            />
+            
+            <!-- Overlay gradient -->
+            <div class="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/20 to-transparent 
+                        opacity-60 group-hover:opacity-80 transition-opacity duration-300"></div>
+            
+            <!-- Línea decorativa superior -->
+            <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-brand-accent to-transparent
+                        transform -translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+          </div>
+          
+          <!-- Borde decorativo -->
+          <div class="absolute inset-0 border border-brand-white/10 rounded-sm 
+                      group-hover:border-brand-accent/30 transition-colors duration-300"></div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

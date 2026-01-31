@@ -1,0 +1,91 @@
+---
+import { siteConfig } from '../config/site.config';
+
+// Función para generar estrellas
+const generateStars = (rating: number) => {
+  return Array(5).fill(0).map((_, i) => i < rating);
+};
+---
+
+<section id="resenas" class="py-20 md:py-32 bg-brand-dark relative overflow-hidden">
+  <!-- Decorativo -->
+  <div class="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-brand-black to-transparent"></div>
+  
+  <div class="container-custom relative z-10">
+    <!-- Header de sección -->
+    <div class="text-center mb-12 md:mb-16 reveal">
+      <span class="inline-block text-brand-accent uppercase tracking-widest text-sm mb-4 translatable" data-es="Opiniones" data-ca="Opinions">
+        Opiniones
+      </span>
+      <h2 class="heading-display text-3xl sm:text-4xl md:text-5xl text-brand-white mb-4 translatable" data-es="Lo que dicen nuestros clientes" data-ca="El que diuen els nostres clients">
+        Lo que dicen nuestros clientes
+      </h2>
+      <div class="accent-line mx-auto"></div>
+    </div>
+    
+    <!-- Reviews Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+      {siteConfig.reviews.map((review, index) => (
+        <article 
+          class="review-card card-glass p-6 md:p-8 reveal"
+          style={`--delay: ${index * 0.1}s`}
+        >
+          <!-- Header: nombre y fecha -->
+          <div class="flex items-start justify-between gap-4 mb-4">
+            <div>
+              <h3 class="font-display text-lg text-brand-white uppercase tracking-wide">
+                {review.reviewerName}
+              </h3>
+              <span class="text-sm text-brand-white/50">
+                {review.date}
+              </span>
+            </div>
+            
+            <!-- Estrellas -->
+            <div class="flex gap-0.5" aria-label={`${review.rating} de 5 estrellas`}>
+              {generateStars(review.rating).map((filled) => (
+                <svg 
+                  class={`w-4 h-4 ${filled ? 'text-brand-accent-light fill-current' : 'text-brand-white/20'}`}
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+              ))}
+            </div>
+          </div>
+          
+          <!-- Servicio y barbero -->
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="chip-day">
+              {review.service}
+            </span>
+            <span class="text-xs text-brand-white/40">
+              por {review.barber}
+            </span>
+          </div>
+          
+          <!-- Texto de la reseña -->
+          <blockquote class="font-body text-brand-white/80 leading-relaxed">
+            "{review.text}"
+          </blockquote>
+        </article>
+      ))}
+    </div>
+    
+    <!-- CTA para dejar reseña -->
+    <div class="text-center mt-10 md:mt-12 reveal">
+      <p class="text-brand-white/60 text-sm mb-4 translatable" data-es="¿Ya nos has visitado?" data-ca="Ja ens has visitat?">
+        ¿Ya nos has visitado?
+      </p>
+      <a 
+        href={siteConfig.social.instagram}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-secondary text-sm"
+      >
+        <span class="translatable" data-es="Déjanos tu opinión" data-ca="Deixa'ns la teva opinió">Déjanos tu opinión</span>
+      </a>
+    </div>
+  </div>
+</section>

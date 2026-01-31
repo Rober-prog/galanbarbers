@@ -1,0 +1,189 @@
+---
+import { siteConfig } from '../config/site.config';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { 
+  title = siteConfig.seo.title, 
+  description = siteConfig.seo.description 
+} = Astro.props;
+
+// Schema.org JSON-LD para BarberShop
+const schemaOrg = {
+  "@context": "https://schema.org",
+  "@type": "BarberShop",
+  "name": siteConfig.name,
+  "description": siteConfig.seo.description,
+  "telephone": siteConfig.contact.phoneTel,
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": siteConfig.contact.address,
+    "addressLocality": siteConfig.contact.city,
+    "addressRegion": siteConfig.contact.province,
+    "postalCode": siteConfig.contact.postalCode,
+    "addressCountry": siteConfig.contact.country
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "10:00",
+      "closes": "14:15"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "15:00",
+      "closes": "19:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Saturday",
+      "opens": "09:00",
+      "closes": "14:00"
+    }
+  ],
+  "sameAs": [
+    siteConfig.social.instagram
+  ]
+};
+---
+
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  <!-- SEO básico -->
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href={Astro.url.href} />
+  
+  <!-- Open Graph -->
+  <meta property="og:type" content={siteConfig.seo.type} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:locale" content={siteConfig.seo.locale} />
+  <meta property="og:site_name" content={siteConfig.name} />
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/assets/LOGOPRINCIPAL.png" />
+  <link rel="apple-touch-icon" href="/assets/LOGOPRINCIPAL.png" />
+  
+  <!-- Preload fuentes críticas -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  
+  <!-- Theme color -->
+  <meta name="theme-color" content="#0a0a0a" />
+  <meta name="msapplication-TileColor" content="#0a0a0a" />
+  
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
+</head>
+<body class="min-h-screen bg-brand-black text-brand-white">
+  <!-- Noise overlay sutil -->
+  <div class="noise-overlay" aria-hidden="true"></div>
+  
+  <!-- Contenido principal -->
+  <slot />
+  
+  <!-- Scripts GSAP -->
+  <script>
+    import { gsap } from 'gsap';
+    import { ScrollTrigger } from 'gsap/ScrollTrigger';
+    
+    // Registrar plugins
+    gsap.registerPlugin(ScrollTrigger);
+    
+    // Respetar preferencias de movimiento reducido
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
+    if (!prefersReducedMotion) {
+      // Animaciones de reveal al scroll
+      const revealElements = document.querySelectorAll('.reveal');
+      
+      revealElements.forEach((el) => {
+        gsap.fromTo(el, 
+          { 
+            opacity: 0, 
+            y: 50 
+          },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: el,
+              start: 'top 85%',
+              toggleActions: 'play none none none'
+            }
+          }
+        );
+      });
+      
+      // Animación de líneas decorativas
+      gsap.utils.toArray('.accent-line').forEach((line) => {
+        gsap.fromTo(line,
+          { scaleX: 0, transformOrigin: 'left center' },
+          {
+            scaleX: 1,
+            duration: 1,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: line,
+              start: 'top 90%',
+              toggleActions: 'play none none none'
+            }
+          }
+        );
+      });
+      
+      // Header shrink on scroll
+      const header = document.querySelector('#main-header');
+      if (header) {
+        ScrollTrigger.create({
+          start: 'top -100',
+          onUpdate: (self) => {
+            if (self.direction === 1 && self.progress > 0) {
+              header.classList.add('scrolled');
+            } else if (self.progress === 0) {
+              header.classList.remove('scrolled');
+            }
+          }
+        });
+      }
+      
+      // Floating button animation
+      const floatingBtn = document.querySelector('#floating-cta');
+      if (floatingBtn) {
+        ScrollTrigger.create({
+          start: 'top -300',
+          onEnter: () => floatingBtn.classList.add('visible'),
+          onLeaveBack: () => floatingBtn.classList.remove('visible')
+        });
+      }
+    } else {
+      // Sin animaciones: mostrar todo directamente
+      document.querySelectorAll('.reveal').forEach(el => {
+        (el as HTMLElement).style.opacity = '1';
+        (el as HTMLElement).style.transform = 'none';
+      });
+    }
+  </script>
+</body>
+</html>

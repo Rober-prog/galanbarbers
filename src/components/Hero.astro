@@ -1,0 +1,70 @@
+---
+import { siteConfig } from '../config/site.config';
+---
+
+<section 
+  id="hero" 
+  class="relative min-h-screen flex items-center justify-center overflow-hidden"
+>
+  <!-- Background Image -->
+  <div class="absolute inset-0 z-0">
+    <img 
+      src="/assets/local/LOC1.jpeg"
+      alt="Interior de Galán Barbers"
+      class="w-full h-full object-cover object-center"
+      loading="eager"
+      fetchpriority="high"
+    />
+    <!-- Gradient overlays -->
+    <div class="absolute inset-0 bg-gradient-to-b from-brand-black/70 via-brand-black/50 to-brand-black"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-brand-black/60 via-transparent to-brand-black/60"></div>
+  </div>
+  
+  <!-- Grid lines decorativo -->
+  <div class="absolute inset-0 z-0 grid-lines opacity-30"></div>
+  
+  <!-- Contenido -->
+  <div class="container-custom relative z-10 text-center py-20">
+    <!-- Logo principal -->
+    <div class="mb-8 reveal">
+      <img 
+        src={siteConfig.images.logo.main}
+        alt={`Logo ${siteConfig.name}`}
+        class="mx-auto h-32 sm:h-40 md:h-48 lg:h-56 w-auto object-contain drop-shadow-2xl"
+        loading="eager"
+      />
+    </div>
+    
+    <!-- Nombre -->
+    <h1 class="heading-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-brand-white mb-4 reveal">
+      {siteConfig.name}
+    </h1>
+    
+    <!-- Línea decorativa -->
+    <div class="accent-line mx-auto mb-6"></div>
+    
+    <!-- Tagline -->
+    <p class="font-body text-lg sm:text-xl md:text-2xl text-brand-white/80 max-w-xl mx-auto mb-10 reveal translatable" data-es="Tu estilo, nuestra pasión" data-ca="El teu estil, la nostra passió">
+      Tu estilo, nuestra pasión
+    </p>
+    
+    <!-- CTA -->
+    <div class="flex items-center justify-center reveal">
+      <button 
+        class="btn-primary text-lg px-8 py-4"
+        data-open-booking
+      >
+        <span class="translatable" data-es="Reservar cita" data-ca="Reservar cita">Reservar cita</span>
+      </button>
+    </div>
+    
+  </div>
+  
+  <!-- Líneas decorativas laterales -->
+  <div class="absolute left-8 top-1/4 bottom-1/4 hidden lg:block">
+    <div class="line-vertical h-full"></div>
+  </div>
+  <div class="absolute right-8 top-1/4 bottom-1/4 hidden lg:block">
+    <div class="line-vertical h-full"></div>
+  </div>
+</section>

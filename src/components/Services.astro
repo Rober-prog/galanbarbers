@@ -1,0 +1,270 @@
+---
+import { siteConfig } from '../config/site.config';
+
+const barbers = [
+  { id: 'ivan', name: 'Iván', fullName: 'Iván Martínez Galán' },
+  { id: 'juan', name: 'Juan', fullName: 'Juan Martínez Galán' },
+  { id: 'natanael', name: 'Natanael', fullName: 'Natanael' },
+];
+
+const getTagClass = (tag: string | null) => {
+  if (!tag) return '';
+  if (tag === 'VIP') return 'chip-vip';
+  if (tag === 'Premium') return 'chip-premium';
+  return 'chip-day';
+};
+
+// Traducciones de servicios
+const serviceTranslations: Record<string, { es: string; ca: string }> = {
+  'Corte de cabello + lavado': { es: 'Corte de cabello + lavado', ca: 'Tall de cabell + rentat' },
+  'Corte de cabello + lavado + cejas': { es: 'Corte de cabello + lavado + cejas', ca: 'Tall de cabell + rentat + celles' },
+  'Arreglo de barba': { es: 'Arreglo de barba', ca: 'Arranjament de barba' },
+  'Rapado todo al mismo número': { es: 'Rapado todo al mismo número', ca: 'Rapat tot al mateix número' },
+  'Corte de cabello + lavado + arreglo de barba': { es: 'Corte de cabello + lavado + arreglo de barba', ca: 'Tall de cabell + rentat + arranjament de barba' },
+  'Rapado + afeitado + arreglo de barba': { es: 'Rapado + afeitado + arreglo de barba', ca: 'Rapat + afaitat + arranjament de barba' },
+  'Rapado o afeitado + arreglo de barba': { es: 'Rapado o afeitado + arreglo de barba', ca: 'Rapat o afaitat + arranjament de barba' },
+  'Corte de niño': { es: 'Corte de niño', ca: 'Tall de nen' },
+  'Especial chicas': { es: 'Especial chicas', ca: 'Especial noies' },
+};
+
+// Traducciones de notas
+const noteTranslations: Record<string, { es: string; ca: string }> = {
+  'Martes y Miércoles': { es: 'Martes y Miércoles', ca: 'Dimarts i Dimecres' },
+  'Jueves, Viernes y Sábado': { es: 'Jueves, Viernes y Sábado', ca: 'Dijous, Divendres i Dissabte' },
+};
+
+// Función para obtener traducción
+const getServiceTrans = (name: string) => serviceTranslations[name] || { es: name, ca: name };
+const getNoteTrans = (note: string | undefined) => note ? (noteTranslations[note] || { es: note, ca: note }) : null;
+---
+
+<section id="servicios" class="py-20 md:py-32 bg-brand-black relative">
+  <!-- Líneas decorativas de fondo -->
+  <div class="absolute inset-0 grid-lines opacity-20"></div>
+  
+  <div class="container-custom relative z-10">
+    <!-- Header de sección -->
+    <div class="text-center mb-12 md:mb-16 reveal">
+      <span class="inline-block text-brand-accent uppercase tracking-widest text-sm mb-4 translatable" data-es="Nuestros servicios" data-ca="Els nostres serveis">
+        Nuestros servicios
+      </span>
+      <h2 class="heading-display text-3xl sm:text-4xl md:text-5xl text-brand-white mb-4 translatable" data-es="Servicios & Precios" data-ca="Serveis i Preus">
+        Servicios & Precios
+      </h2>
+      <div class="accent-line mx-auto"></div>
+    </div>
+    
+    <!-- Botón para abrir popup -->
+    <div class="text-center reveal">
+      <button 
+        id="open-services-popup"
+        class="btn-primary text-lg px-8 py-4"
+      >
+        <span class="translatable" data-es="Ver servicios y precios" data-ca="Veure serveis i preus">Ver servicios y precios</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Popup de servicios -->
+<div 
+  id="services-popup" 
+  class="fixed inset-0 z-50 hidden items-center justify-center p-4"
+  aria-modal="true"
+  role="dialog"
+>
+  <!-- Backdrop con blur -->
+  <div 
+    id="services-popup-backdrop"
+    class="absolute inset-0 bg-brand-black/80 backdrop-blur-sm transition-opacity duration-300"
+  ></div>
+  
+  <!-- Contenido del popup -->
+  <div class="relative z-10 w-full max-w-2xl max-h-[90vh] overflow-hidden bg-brand-gray/95 border border-brand-white/10 rounded-lg shadow-2xl">
+    <!-- Header del popup -->
+    <div class="sticky top-0 bg-brand-gray border-b border-brand-white/10 p-4 md:p-6 flex items-center justify-between">
+      <h3 class="heading-display text-xl md:text-2xl text-brand-white translatable" data-es="Servicios & Precios" data-ca="Serveis i Preus">
+        Servicios & Precios
+      </h3>
+      <button 
+        id="close-services-popup"
+        class="w-10 h-10 flex items-center justify-center text-brand-white/60 hover:text-brand-white transition-colors"
+        aria-label="Cerrar"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    
+    <!-- Contenido scrolleable -->
+    <div class="overflow-y-auto max-h-[calc(90vh-140px)] p-4 md:p-6">
+      <!-- Tabs de barberos -->
+      <div class="max-w-4xl mx-auto">
+        <!-- Tab buttons -->
+        <div 
+          class="flex flex-wrap justify-center gap-2 md:gap-4 mb-6 md:mb-8"
+          role="tablist"
+          aria-label="Seleccionar barbero"
+        >
+          {barbers.map((barber, index) => (
+            <button
+              role="tab"
+              id={`tab-${barber.id}`}
+              aria-controls={`panel-${barber.id}`}
+              aria-selected={index === 0 ? 'true' : 'false'}
+              data-tab={barber.id}
+              class={`tab-btn px-4 py-2 md:px-6 md:py-3 font-display uppercase tracking-wider text-xs md:text-sm
+                     border-2 transition-all duration-300
+                     ${index === 0 
+                       ? 'bg-brand-accent border-brand-accent text-brand-white' 
+                       : 'bg-transparent border-brand-white/20 text-brand-white/70 hover:border-brand-accent hover:text-brand-accent'
+                     }`}
+            >
+              {barber.name}
+            </button>
+          ))}
+        </div>
+        
+        <!-- Tab panels -->
+        <div class="tab-panels">
+          {barbers.map((barber, index) => {
+            const services = siteConfig.services[barber.id as keyof typeof siteConfig.services];
+            return (
+              <div
+                role="tabpanel"
+                id={`panel-${barber.id}`}
+                aria-labelledby={`tab-${barber.id}`}
+                data-panel={barber.id}
+                class={`tab-panel ${index === 0 ? 'block' : 'hidden'}`}
+              >
+                <!-- Nombre del barbero -->
+                <div class="text-center mb-6">
+                  <h4 class="font-display text-lg md:text-xl text-brand-accent-light">
+                    {services.barberName}
+                  </h4>
+                </div>
+                
+                <!-- Lista de servicios -->
+                <div class="space-y-2">
+                  {services.items.map((service) => {
+                    const serviceTrans = getServiceTrans(service.name);
+                    const noteTrans = getNoteTrans(service.note);
+                    return (
+                      <div 
+                        class="service-item card-glass p-3 md:p-4 flex items-center justify-between gap-4
+                               hover:border-brand-accent/30 transition-all duration-300"
+                      >
+                        <div class="flex-1 min-w-0">
+                          <div class="flex flex-wrap items-center gap-2 mb-1">
+                            <span 
+                              class="service-name font-body text-brand-white text-sm md:text-base translatable"
+                              data-es={serviceTrans.es}
+                              data-ca={serviceTrans.ca}
+                            >
+                              {service.name}
+                            </span>
+                            {service.tag && (
+                              <span class={getTagClass(service.tag)}>
+                                {service.tag}
+                              </span>
+                            )}
+                          </div>
+                          {service.note && noteTrans && (
+                            <span 
+                              class="service-note text-xs text-brand-white/50 translatable"
+                              data-es={noteTrans.es}
+                              data-ca={noteTrans.ca}
+                            >
+                              {service.note}
+                            </span>
+                          )}
+                      </div>
+                      
+                      <div class="flex-shrink-0">
+                        <span class="font-display text-lg md:text-xl text-brand-accent font-bold">
+                          {service.price}€
+                        </span>
+                      </div>
+                    </div>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+    
+    <!-- Footer del popup -->
+    <div class="sticky bottom-0 bg-brand-gray border-t border-brand-white/10 p-4 md:p-6">
+      <button 
+        class="btn-primary w-full"
+        data-open-booking
+      >
+        <span class="translatable" data-es="Reservar ahora" data-ca="Reservar ara">Reservar ahora</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Popup functionality
+  const openPopupBtn = document.getElementById('open-services-popup');
+  const closePopupBtn = document.getElementById('close-services-popup');
+  const popup = document.getElementById('services-popup');
+  const backdrop = document.getElementById('services-popup-backdrop');
+  
+  function openPopup() {
+    popup?.classList.remove('hidden');
+    popup?.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+  }
+  
+  function closePopup() {
+    popup?.classList.add('hidden');
+    popup?.classList.remove('flex');
+    document.body.style.overflow = '';
+  }
+  
+  openPopupBtn?.addEventListener('click', openPopup);
+  closePopupBtn?.addEventListener('click', closePopup);
+  backdrop?.addEventListener('click', closePopup);
+  
+  // Cerrar con Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !popup?.classList.contains('hidden')) {
+      closePopup();
+    }
+  });
+
+  // Tab functionality
+  const tabButtons = document.querySelectorAll('[role="tab"]');
+  const tabPanels = document.querySelectorAll('[role="tabpanel"]');
+  
+  tabButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const targetId = button.getAttribute('data-tab');
+      
+      // Update buttons
+      tabButtons.forEach(btn => {
+        const isActive = btn.getAttribute('data-tab') === targetId;
+        btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        btn.classList.toggle('bg-brand-accent', isActive);
+        btn.classList.toggle('border-brand-accent', isActive);
+        btn.classList.toggle('text-brand-white', isActive);
+        btn.classList.toggle('bg-transparent', !isActive);
+        btn.classList.toggle('border-brand-white/20', !isActive);
+        btn.classList.toggle('text-brand-white/70', !isActive);
+      });
+      
+      // Update panels
+      tabPanels.forEach(panel => {
+        const isActive = panel.getAttribute('data-panel') === targetId;
+        panel.classList.toggle('block', isActive);
+        panel.classList.toggle('hidden', !isActive);
+      });
+    });
+  });
+</script>

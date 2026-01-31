@@ -1,0 +1,183 @@
+---
+import { siteConfig } from '../config/site.config';
+
+// Traducciones de días
+const dayTranslations: Record<string, { es: string; ca: string }> = {
+  'Lunes': { es: 'Lunes', ca: 'Dilluns' },
+  'Martes': { es: 'Martes', ca: 'Dimarts' },
+  'Miércoles': { es: 'Miércoles', ca: 'Dimecres' },
+  'Jueves': { es: 'Jueves', ca: 'Dijous' },
+  'Viernes': { es: 'Viernes', ca: 'Divendres' },
+  'Sábado': { es: 'Sábado', ca: 'Dissabte' },
+  'Domingo': { es: 'Domingo', ca: 'Diumenge' },
+};
+
+// Traducciones de horas
+const hoursTranslations: Record<string, { es: string; ca: string }> = {
+  'Cerrado': { es: 'Cerrado', ca: 'Tancat' },
+  '10:00–14:15 y 15:00–19:00': { es: '10:00–14:15 y 15:00–19:00', ca: '10:00–14:15 i 15:00–19:00' },
+  '09:00–14:00': { es: '09:00–14:00', ca: '09:00–14:00' },
+};
+---
+
+<section id="horario" class="py-20 md:py-32 bg-brand-black relative">
+  <!-- Imagen de fondo con overlay -->
+  <div class="absolute inset-0 z-0">
+    <img 
+      src="/assets/local/LOC2.jpeg"
+      alt=""
+      class="w-full h-full object-cover opacity-20"
+      loading="lazy"
+      aria-hidden="true"
+    />
+    <div class="absolute inset-0 bg-gradient-to-r from-brand-black via-brand-black/90 to-brand-black"></div>
+  </div>
+  
+  <div class="container-custom relative z-10">
+    <div class="max-w-2xl mx-auto">
+      <!-- Header de sección -->
+      <div class="text-center mb-12 md:mb-16 reveal">
+        <span class="inline-block text-brand-accent uppercase tracking-widest text-sm mb-4 translatable" data-es="Cuándo visitarnos" data-ca="Quan visitar-nos">
+          Cuándo visitarnos
+        </span>
+        <h2 class="heading-display text-3xl sm:text-4xl md:text-5xl text-brand-white mb-4 translatable" data-es="Horario" data-ca="Horari">
+          Horario
+        </h2>
+        <div class="accent-line mx-auto"></div>
+      </div>
+      
+      <!-- Botón para abrir popup -->
+      <div class="text-center reveal">
+        <button 
+          id="open-schedule-popup"
+          class="btn-primary text-lg px-8 py-4"
+        >
+          <span class="translatable" data-es="Ver horario" data-ca="Veure horari">Ver horario</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Popup de horario -->
+<div 
+  id="schedule-popup" 
+  class="fixed inset-0 z-50 hidden items-center justify-center p-4"
+  aria-modal="true"
+  role="dialog"
+>
+  <!-- Backdrop con blur -->
+  <div 
+    id="schedule-popup-backdrop"
+    class="absolute inset-0 bg-brand-black/80 backdrop-blur-sm transition-opacity duration-300"
+  ></div>
+  
+  <!-- Contenido del popup -->
+  <div class="relative z-10 w-full max-w-lg max-h-[90vh] overflow-hidden bg-brand-gray/95 border border-brand-white/10 rounded-lg shadow-2xl">
+    <!-- Header del popup -->
+    <div class="sticky top-0 bg-brand-gray border-b border-brand-white/10 p-4 md:p-6 flex items-center justify-between">
+      <h3 class="heading-display text-xl md:text-2xl text-brand-white translatable" data-es="Horario" data-ca="Horari">
+        Horario
+      </h3>
+      <button 
+        id="close-schedule-popup"
+        class="w-10 h-10 flex items-center justify-center text-brand-white/60 hover:text-brand-white transition-colors"
+        aria-label="Cerrar"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    
+    <!-- Contenido scrolleable -->
+    <div class="overflow-y-auto max-h-[calc(90vh-180px)] p-4 md:p-6">
+      <!-- Schedule Table/Stack -->
+      <div class="card-glass overflow-hidden">
+        <div class="divide-y divide-brand-white/10">
+          {siteConfig.schedule.map((item, index) => {
+            const dayTrans = dayTranslations[item.day] || { es: item.day, ca: item.day };
+            const hoursTrans = hoursTranslations[item.hours] || { es: item.hours, ca: item.hours };
+            return (
+              <div 
+                class={`schedule-row flex items-center justify-between p-4
+                       transition-colors duration-300
+                       ${item.closed 
+                         ? 'bg-brand-white/5' 
+                         : 'hover:bg-brand-accent/5'
+                       }`}
+              >
+                <span 
+                  class={`schedule-day font-display text-base md:text-lg uppercase tracking-wide translatable
+                            ${item.closed ? 'text-brand-white/40' : 'text-brand-white'}`}
+                  data-es={dayTrans.es}
+                  data-ca={dayTrans.ca}
+                >
+                  {item.day}
+                </span>
+                
+                <span 
+                  class={`schedule-hours font-body text-sm md:text-base translatable
+                            ${item.closed 
+                              ? 'text-brand-white/30 italic' 
+                              : 'text-brand-accent-light'
+                            }`}
+                  data-es={hoursTrans.es}
+                  data-ca={hoursTrans.ca}
+                >
+                  {item.hours}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      
+      <!-- Nota -->
+      <p class="text-center text-brand-white/50 text-sm mt-4 translatable" data-es="Sin cita previa los días de menor afluencia. Para mayor comodidad, reserva tu hora." data-ca="Sense cita prèvia els dies de menor afluència. Per a major comoditat, reserva la teva hora.">
+        Sin cita previa los días de menor afluencia. Para mayor comodidad, reserva tu hora.
+      </p>
+    </div>
+    
+    <!-- Footer del popup -->
+    <div class="sticky bottom-0 bg-brand-gray border-t border-brand-white/10 p-4 md:p-6">
+      <button 
+        class="btn-primary w-full"
+        data-open-booking
+      >
+        <span class="translatable" data-es="Reservar mi cita" data-ca="Reservar la meva cita">Reservar mi cita</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Popup functionality
+  const openSchedulePopupBtn = document.getElementById('open-schedule-popup');
+  const closeSchedulePopupBtn = document.getElementById('close-schedule-popup');
+  const schedulePopup = document.getElementById('schedule-popup');
+  const scheduleBackdrop = document.getElementById('schedule-popup-backdrop');
+  
+  function openSchedulePopup() {
+    schedulePopup?.classList.remove('hidden');
+    schedulePopup?.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+  }
+  
+  function closeSchedulePopup() {
+    schedulePopup?.classList.add('hidden');
+    schedulePopup?.classList.remove('flex');
+    document.body.style.overflow = '';
+  }
+  
+  openSchedulePopupBtn?.addEventListener('click', openSchedulePopup);
+  closeSchedulePopupBtn?.addEventListener('click', closeSchedulePopup);
+  scheduleBackdrop?.addEventListener('click', closeSchedulePopup);
+  
+  // Cerrar con Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !schedulePopup?.classList.contains('hidden')) {
+      closeSchedulePopup();
+    }
+  });
+</script>

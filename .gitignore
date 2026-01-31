@@ -1,0 +1,27 @@
+# Dependencias
+node_modules/
+
+# Archivos de salida
+dist/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Variables de entorno
+.env
+.env.*
+!.env.example
+
+# IDE
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+
+# Cache
+.astro/

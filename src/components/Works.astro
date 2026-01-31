@@ -1,0 +1,206 @@
+---
+import { siteConfig } from '../config/site.config';
+---
+
+<section id="trabajos" class="py-20 md:py-32 bg-brand-black relative">
+  <div class="container-custom relative z-10">
+    <!-- Header de sección -->
+    <div class="text-center mb-12 md:mb-16 reveal">
+      <span class="inline-block text-brand-accent uppercase tracking-widest text-sm mb-4 translatable" data-es="Portfolio" data-ca="Portafoli">
+        Portfolio
+      </span>
+      <h2 class="heading-display text-3xl sm:text-4xl md:text-5xl text-brand-white mb-4 translatable" data-es="Nuestros Trabajos" data-ca="Els Nostres Treballs">
+        Nuestros Trabajos
+      </h2>
+      <div class="accent-line mx-auto"></div>
+      <p class="font-body text-brand-white/60 max-w-lg mx-auto mt-4 translatable" data-es="Cada corte es una obra de arte. Mira algunos de nuestros trabajos recientes." data-ca="Cada tall és una obra d'art. Mira alguns dels nostres treballs recents.">
+        Cada corte es una obra de arte. Mira algunos de nuestros trabajos recientes.
+      </p>
+    </div>
+    
+    <!-- Gallery Grid -->
+    <div 
+      class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 max-w-6xl mx-auto"
+      id="works-gallery"
+    >
+      {siteConfig.images.works.map((image, index) => (
+        <button
+          class="gallery-item group relative aspect-square overflow-hidden rounded-sm cursor-pointer reveal"
+          style={`--delay: ${index * 0.1}s`}
+          data-index={index}
+          data-src={image}
+          aria-label={`Ver trabajo ${index + 1}`}
+        >
+          <img 
+            src={image}
+            alt={`Trabajo de barbería ${index + 1}`}
+            class="w-full h-full object-cover transition-transform duration-500 
+                   group-hover:scale-110"
+            loading="lazy"
+          />
+          
+          <!-- Overlay on hover -->
+          <div class="absolute inset-0 bg-brand-accent/0 group-hover:bg-brand-accent/20 
+                      transition-colors duration-300 flex items-center justify-center">
+            <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 
+                        transform scale-50 group-hover:scale-100">
+              <svg class="w-10 h-10 text-brand-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+              </svg>
+            </div>
+          </div>
+          
+          <!-- Corner accents -->
+          <div class="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-brand-accent 
+                      opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div class="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-brand-accent 
+                      opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        </button>
+      ))}
+    </div>
+    
+    <!-- Instagram CTA -->
+    <div class="text-center mt-10 md:mt-12 reveal">
+      <a 
+        href={siteConfig.social.instagram}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-secondary inline-flex items-center gap-2"
+      >
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+        </svg>
+        <span class="translatable" data-es="Síguenos en Instagram" data-ca="Segueix-nos a Instagram">Síguenos en Instagram</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox Modal -->
+<div 
+  id="lightbox"
+  class="fixed inset-0 z-50 bg-brand-black/95 backdrop-blur-lg hidden items-center justify-center p-4"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Visor de imágenes"
+>
+  <button 
+    id="lightbox-close"
+    class="absolute top-4 right-4 w-12 h-12 flex items-center justify-center text-brand-white/70 
+           hover:text-brand-white transition-colors z-10"
+    aria-label="Cerrar visor"
+  >
+    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  </button>
+  
+  <button 
+    id="lightbox-prev"
+    class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center 
+           text-brand-white/70 hover:text-brand-white transition-colors"
+    aria-label="Imagen anterior"
+  >
+    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+    </svg>
+  </button>
+  
+  <button 
+    id="lightbox-next"
+    class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center 
+           text-brand-white/70 hover:text-brand-white transition-colors"
+    aria-label="Imagen siguiente"
+  >
+    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+    </svg>
+  </button>
+  
+  <img 
+    id="lightbox-image"
+    src=""
+    alt=""
+    class="max-w-full max-h-[80vh] object-contain rounded-sm"
+  />
+  
+  <div 
+    id="lightbox-counter"
+    class="absolute bottom-4 left-1/2 -translate-x-1/2 text-brand-white/60 text-sm font-body"
+  ></div>
+</div>
+
+<script>
+  // Lightbox functionality
+  const gallery = document.getElementById('works-gallery');
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImage = document.getElementById('lightbox-image') as HTMLImageElement;
+  const lightboxClose = document.getElementById('lightbox-close');
+  const lightboxPrev = document.getElementById('lightbox-prev');
+  const lightboxNext = document.getElementById('lightbox-next');
+  const lightboxCounter = document.getElementById('lightbox-counter');
+  
+  const galleryItems = gallery?.querySelectorAll('.gallery-item');
+  let currentIndex = 0;
+  const images: string[] = [];
+  
+  galleryItems?.forEach((item, index) => {
+    const src = item.getAttribute('data-src');
+    if (src) images.push(src);
+    
+    item.addEventListener('click', () => {
+      currentIndex = index;
+      openLightbox();
+    });
+  });
+  
+  function openLightbox() {
+    if (!lightbox || !lightboxImage) return;
+    
+    lightboxImage.src = images[currentIndex];
+    lightboxImage.alt = `Trabajo de barbería ${currentIndex + 1}`;
+    if (lightboxCounter) {
+      lightboxCounter.textContent = `${currentIndex + 1} / ${images.length}`;
+    }
+    
+    lightbox.classList.remove('hidden');
+    lightbox.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+  }
+  
+  function closeLightbox() {
+    if (!lightbox) return;
+    lightbox.classList.add('hidden');
+    lightbox.classList.remove('flex');
+    document.body.style.overflow = '';
+  }
+  
+  function prevImage() {
+    currentIndex = currentIndex > 0 ? currentIndex - 1 : images.length - 1;
+    openLightbox();
+  }
+  
+  function nextImage() {
+    currentIndex = currentIndex < images.length - 1 ? currentIndex + 1 : 0;
+    openLightbox();
+  }
+  
+  lightboxClose?.addEventListener('click', closeLightbox);
+  lightboxPrev?.addEventListener('click', prevImage);
+  lightboxNext?.addEventListener('click', nextImage);
+  
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (lightbox?.classList.contains('hidden')) return;
+    
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') prevImage();
+    if (e.key === 'ArrowRight') nextImage();
+  });
+  
+  // Close on backdrop click
+  lightbox?.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+</script>

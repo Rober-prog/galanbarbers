@@ -1,0 +1,98 @@
+Servicios y precios (Iván Martínez Galán)
+Corte de cabello + lavado — 16,00 €
+Corte de cabello + lavado + cejas — 18,00 €
+Arreglo de barba — 12,00 €
+Rapado todo al mismo número (MARTES y MIÉRCOLES) — 8,00 €
+Corte de cabello + lavado + arreglo de barba — 23,00 €
+Rapado + afeitado + arreglo de barba — 19,00 €
+Corte de niño — 12,00 €
+Arreglo de barba (servicio premium) — 15,00 €
+Corte de cabello + lavado + arreglo de barba (VIP) — 30,00 €
+Especial chicas — 10,00 €
+Rapado todo al mismo número (JUEVES, VIERNES y SÁBADO) — 10,00 €
+
+Servicios y precios (Juan Martínez Galán)
+Corte de cabello + lavado — 16,00 €
+Corte de cabello + lavado + cejas — 18,00 €
+Arreglo de barba — 12,00 €
+Rapado todo al mismo número (MARTES y MIÉRCOLES) — 8,00 €
+Corte de cabello + lavado + arreglo de barba — 23,00 €
+Rapado + afeitado + arreglo de barba — 19,00 €
+Corte de niño — 12,00 €
+Arreglo de barba (servicio premium) — 15,00 €
+Corte de cabello + lavado + arreglo de barba (VIP) — 30,00 €
+Especial chicas — 10,00 €
+Rapado todo al mismo número (JUEVES, VIERNES y SÁBADO) — 10,00 €
+
+Servicios y precios (Natanael)
+Corte de cabello + lavado — 16,00 €
+Rapado todo al mismo número (MARTES y MIÉRCOLES) — 8,00 €
+Corte de cabello + lavado + arreglo de barba — 23,00 €
+Rapado o afeitado + arreglo de barba — 19,00 €
+Corte de niño — 12,00 €
+Rapado todo al mismo número (JUEVES, VIERNES y SÁBADO) — 10,00 €
+
+Horario de apertura (formato lista)
+Lunes: Cerrado
+Martes: 10:00–14:15 y 15:00–19:00
+Miércoles: 10:00–14:15 y 15:00–19:00
+Jueves: 10:00–14:15 y 15:00–19:00
+Viernes: 10:00–14:15 y 15:00–19:00
+Sábado: 09:00–14:00
+Domingo: Cerrado
+
+Perfil de instragram
+https://www.instagram.com/galan_barbers/?hl=es
+
+Reseñas (formato estructurado para integrar en una web)
+{
+  "source": "captura_pantalla",
+  "language": "es",
+  "reviews": [
+    {
+      "reviewer_name": "Iván T.",
+      "review_date_text": "Ene. 27, 2026",
+      "rating_stars": 5,
+      "service_name": "Corte de cabello + lavado",
+      "performed_by": "Natanael",
+      "review_text": "Muy buen trato y muy detallistas. Me he sentido muy cómodo.",
+      "helpful_votes": 0,
+      "unhelpful_votes": 0
+    },
+    {
+      "reviewer_name": "Humberto V.",
+      "review_date_text": "Ene. 24, 2026",
+      "rating_stars": 5,
+      "service_name": "Corte de cabello + lavado",
+      "performed_by": "Natanael",
+      "review_text": "Super",
+      "helpful_votes": 0,
+      "unhelpful_votes": 0
+    },
+    {
+      "reviewer_name": "Pablo G.",
+      "review_date_text": "Ene. 22, 2026",
+      "rating_stars": 5,
+      "service_name": "Corte de cabello + lavado",
+      "performed_by": "Ivan Martinez Galan",
+      "review_text": "Excelentes profesionales!!!",
+      "helpful_votes": 0,
+      "unhelpful_votes": 0
+    },
+    {
+      "reviewer_name": "Ofelio D.",
+      "review_date_text": "Ene. 18, 2026",
+      "rating_stars": 5,
+      "service_name": "corte de niño",
+      "performed_by": "Natanael",
+      "review_text": "Todo ha sido muy guay y el peluquero me ha tratado muy bien aparte de que me ha yecho un corte y le ha salido muy bien",
+      "helpful_votes": 0,
+      "unhelpful_votes": 0
+    }
+  ]
+}
+
+¿DONDE ESTAMOS?
+Dirección: Rambla de Nostra Senyora, 29, 08720 Vilafranca del Penedès, Barcelona
+Teléfono: 695 96 92 11
+Provincia: Barcelona
